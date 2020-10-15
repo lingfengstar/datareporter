@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<link href="~/Content/layuiadmin/layui/css/layui.css" rel="stylesheet" media="all" />
+<script src="~/Content/layuiadmin/layui/layui.js" media="all" ></script>
+<body>
+    <table class="layui-hide" id="test" lay-filter="test" lay-data="{id: 'idTest'}"></table>
+
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add">添加机构信息</button>
+        </div>
+    </script>
+</body>
+
+
+<script type="text/javascript">
+    layui.use(['table', 'form', 'layer'], function () {
+        var table = layui.table
+            , form = layui.form
+            , $ = layui.$
+            , layer = layui.layer;
+
+        //第一个实例
+        table.render({
+
+
+            elem: '#test'
+            , url: '/Main/AgencyPageList' //数据接口
+            , type: 'post'
+            , id: 'idTest'
+            , page: true
+            , limit: 10
+            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            , defaultToolbar: [ 'exports', 'print']
+            , cols: [[ //表头
+                { field: 'ID', title: 'ID', width: 60, sort: true, fixed: 'left', hide: true }
+                , {
+                    field: 'id', title: '序号', width: 80, sort: true, unresize: true, fixed: 'left', templet: function (d) { return (d.LAY_INDEX); }
+                }
+                , { field: 'AgencyNo', title: '机构号', width: 100, sort: true }
+                , { field: 'account_bank', title: '开户银行名称', width: 220 }
+                , { field: 'account_bank_code', title: '开户银行行号', width: 140 }
+                , { field: 'banktype_code', title: '开户银行类别编码', width: 150 }
+                , { field: 'banktype_name', title: '开户银行类别名称' }
+
+            ]]
+        });
+
+        //监听事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            if (obj.event === 'add') {
+                layer.open({
+                    type: 2,
+                    area: ['490px', '490px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '/Main/addagency'
+                });
+            }
+        });
+
+
+    });
+
+</script>
+
+

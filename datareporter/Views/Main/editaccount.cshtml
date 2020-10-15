@@ -1,0 +1,122 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<link href="~/Content/layuiadmin/layui/css/layui.css" rel="stylesheet" media="all" />
+<script src="~/Content/layuiadmin/layui/layui.js" media="all"></script>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>修改账户信息</legend>
+</fieldset>
+
+<form class="layui-form" action="" lay-filter="formTest">
+    <div class="layui-form-item" style="display:none">
+        <div class="layui-input-inline">
+            <input type="text" name="id" id="id" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">机构号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="AgencyNo" id="AgencyNo" readonly lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">账号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="account_no" lay-verify="required|number" autocomplete="off" placeholder="请输入账号" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">户名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="account_name" lay-verify="required" autocomplete="off" placeholder="请输入户名" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">区划码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="rg_code" lay-verify="required|number" autocomplete="off" placeholder="请输入区划码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">类别代码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="type_code" lay-verify="required|number" autocomplete="off" placeholder="请输入类别代码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">类别名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="type_name" lay-verify="required" autocomplete="off" placeholder="请输入类别名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-input-block">
+        <button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+    </div>
+</form>
+<script type="text/javascript">
+
+
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , $ = layui.$;
+        //注意：parent 是 JS 自带的全局对象，可用于操作父页面
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+
+        //从父层获取值，json是父层的全局js变量。eval是将该string类型的json串变为标准的json串
+        var parent_json = eval('(' + parent.json + ')');
+        $('id').hide();
+        //给表单赋值
+        form.val("formTest", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+            "id": parent_json.ID// "name": "value"
+            , "AgencyNo": parent_json.AgencyNo
+            , "account_no": parent_json.account_no
+            , "account_name": parent_json.account_name
+            , "rg_code": parent_json.rg_code
+            , "type_code": parent_json.type_code
+            , "type_name": parent_json.type_name
+
+        });
+
+        //获取表单区域所有值
+        var data1 = form.val("formTest");
+
+
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            //console.log(data.field)
+            //layer.msg(JSON.stringify(data.field));
+            $.ajax({
+                url: '/Main/editaccount',
+                type: 'post',
+                data: data.field,
+                dataType: "html",
+
+                success: function (data) {
+                    var data = eval('(' + data + ')');//非常重要
+                    if (data.code == 0) {
+                        parent.layui.table.reload('idTest');
+                        parent.layer.close(index);
+                        parent.layer.alert(data.msg);
+
+                    }
+                    else {
+                        layer.alert(data.msg)
+                    }
+                },
+                error: function (e) {
+                    layer.alert("提交失败！")
+                },
+
+            });
+
+            return false;
+        });
+    });
+</script>

@@ -1,0 +1,377 @@
+body {
+	background-color: #EEF2FB;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	font-size :small ;
+	margin:0px;
+}
+
+.login_top_bg {
+	background-image: url(images/login-top-bg.gif);
+	background-repeat: repeat-x;
+}
+
+.login-buttom-bg {
+	background-image: url(images/login-buttom-bg.gif);
+	background-repeat: repeat-x;
+}
+.login-buttom-txt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #ABCAD3;
+	text-decoration: none;
+	line-height: 20px;
+}
+.login_txt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 25px;
+	color: #333333;
+}
+.login_bg {
+	background-image: url(images/login_bg.jpg);
+	background-repeat: repeat-x;
+}
+.login_bg2 {
+}
+.login_bg_top
+{
+    height :105px;
+    background-image: url(images/cen_top.png);
+    background-repeat: repeat-x;
+
+
+}
+.login_bg_botton
+{
+    height :105px;
+    background-image: url(images/cen_botton.png);
+    background-repeat: repeat-x;
+
+}
+
+.login_bg_cen
+{
+    background-image: url(images/cen_cen.png);
+    background-repeat: repeat;
+}
+
+
+.login_txt_bt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 25px;
+	color: #666666;
+	font-weight: bold;
+}
+.admin_topbg {
+	background-image: url(images/top-right.gif);
+	background-repeat: repeat-x;
+}
+
+.left_topbg {
+	background-image: url(images/content-bg.gif);
+	background-repeat: repeat-x;
+}
+
+.titlebt {
+	font-size: 12px;
+	line-height: 26px;
+	font-weight: bold;
+	color: #000000;
+	background-image: url(images/top_bt.jpg);
+	background-repeat: no-repeat;
+	display: block;
+	text-indent: 15px;
+	padding-top: 5px;
+}
+
+.MM a {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 26px;
+	color: #666666;
+	background-image: url(images/menu_bg.gif);
+	background-repeat: no-repeat;
+	list-style-type: none;
+	list-style-image: none;
+}
+a:link {
+	font-size: 12px;
+	line-height: 25px;
+	color: #333333;
+	text-decoration: none;
+}
+a:hover {
+	font-size: 12px;
+	line-height: 25px;
+	color: #666666;
+	text-decoration: none;
+}
+a:visited {
+	font-size: 12px;
+	line-height: 25px;
+	color: #333333;
+	text-decoration: none;
+}
+
+
+.MM a:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 26px;
+	color: #666666;
+	background-image: url(images/menu_bg.gif);
+	background-repeat: no-repeat;
+	list-style-type: none;
+	list-style-image: none;
+}
+
+.foot                              /*页脚*/
+{
+font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #ABCAD3;
+	text-decoration: none;
+	line-height: 20px;
+}
+a.foot{text-decoration:none}
+a.foot:link
+{font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #ABCAD3;
+	text-decoration: none;
+	line-height: 20px;}
+a.foot:visited
+{font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #ABCAD3;
+	text-decoration: none;
+	line-height: 20px;}
+a.foot:hover
+{font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #ABCAD3;
+	text-decoration: none;
+	line-height: 20px;}
+a.foot:active
+{font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #ABCAD3;
+	text-decoration: none;
+	line-height: 20px;}
+	
+/*内容块总体样式*/
+.tablezong
+{
+    width:100%;
+}
+
+/*内容块内标题表样式*/
+.tablebiaoti
+{
+    width :100%;
+    background-color :#cccccc;
+}
+
+/*内容标题样式*/
+.biaotileft
+{
+    float :left ;
+    font-weight :bold ;
+    margin-left :10px;
+    margin-top:4px;
+}
+
+.biaotiright
+{
+    float :right ;
+    padding-right :10px;
+}
+
+/*表格总体样式*/
+.table
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-collapse:collapse; /* 关键属性：合并表格内外边框(其实表格边框有2px，外面1px，里面还有1px哦) */
+    border:solid #999; /* 设置边框属性；样式(solid=实线)、颜色(#999=灰) */
+    border-width:1px 1px 1px 1px; /* 设置边框状粗细：上 右 下 左 = 对应：1px 0 0 1px */
+}   
+/*单元格左对齐样式*/
+.tabletd_left
+{
+    padding: 4px;
+    text-align: left;
+    vertical-align: middle;
+    border-collapse:collapse; /* 关键属性：合并表格内外边框(其实表格边框有2px，外面1px，里面还有1px哦) */
+    border:solid #999; /* 设置边框属性；样式(solid=实线)、颜色(#999=灰) */
+    border-width:1px 1px 1px 1px; /* 设置边框状粗细：上 右 下 左 = 对应：1px 0 0 1px */
+}
+
+/*单元格右对齐样式*/
+.tabletd_right
+{
+    padding: 4px;
+    text-align: right;
+    vertical-align: middle;
+    border-collapse:collapse; /* 关键属性：合并表格内外边框(其实表格边框有2px，外面1px，里面还有1px哦) */
+    border:solid #999; /* 设置边框属性；样式(solid=实线)、颜色(#999=灰) */
+    border-width:1px 1px 1px 1px; /* 设置边框状粗细：上 右 下 左 = 对应：1px 0 0 1px */
+}
+
+/*单元格中对齐样式*/
+.tabletd_center
+{
+    padding: 4px;
+    text-align: center;
+    vertical-align: middle;
+    border-collapse:collapse; /* 关键属性：合并表格内外边框(其实表格边框有2px，外面1px，里面还有1px哦) */
+    border:solid #999; /* 设置边框属性；样式(solid=实线)、颜色(#999=灰) */
+    border-width:1px 1px 1px 1px; /* 设置边框状粗细：上 右 下 左 = 对应：1px 0 0 1px */
+}
+
+/*无边框表格*/
+.table_noborder
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}   
+/*单元格左对齐样式*/
+.td_leftnoborder
+{
+    padding: 4px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+/*单元格右对齐样式*/
+.td_rightnoborder
+{
+    padding: 4px;
+    text-align: right;
+    vertical-align: middle;
+}
+
+/*单元格中对齐样式*/
+.td_centernoborder
+{
+    padding: 4px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+/*后台首页标题文字*/
+.defaultbiaoti  
+{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/*gridview总体样式*/
+.gv
+{
+    background-color: #FFFFFF;
+    text-align: center;
+    vertical-align: middle;
+    font-size: small;
+    margin :8px 0 8px 0;
+    border: 1px groove #000000;
+}
+
+/*gridview表头样式*/
+.gvhead 
+{
+    background-color: #C0C0C0;
+    height: 30px;
+    border: 1px groove #000000;
+}
+
+/*gridview行样式*/
+.gvrow 
+{
+
+    height: 30px;
+    padding: 2px;
+    border: 1px groove #000000;
+}
+
+.top_bg_left
+{
+    background-image: url(   'images/left-top-right.gif' );
+     width :17px;
+     height :29px;
+}
+
+.top_bg_center
+{
+    background-image: url(  'images/content-bg.gif' );
+    background-repeat: repeat-x;
+    vertical-align :top;
+
+}
+
+.top_bg_right
+{
+    background-image: url( 'images/nav-right-bg.gif' );
+    width :16px;
+    height :29px;
+    vertical-align :top ;
+}
+
+.buttom_bg_left
+{
+    background-image: url(   'images/buttom_left2.gif' );
+    height: 18px;
+}
+
+.buttom_bg_center
+{
+    background-image: url(  'images/buttom_bgs.gif' );
+    background-repeat: repeat-x;
+    height :18px;
+}
+
+.buttom_bg_right
+{
+    background-image: url( 'images/buttom_right2.gif' );
+}
+.tablezong
+{
+    width :100%;
+}
+
+.lt0 {
+	BORDER-RIGHT: #f1f1f1 1px solid; PADDING-RIGHT: 6px; BORDER-TOP: #f1f1f1 1px solid; PADDING-LEFT: 6px;  PADDING-BOTTOM: 0px; BORDER-LEFT: #f1f1f1 1px solid; CURSOR: hand; PADDING-TOP: 0px; BORDER-BOTTOM: #f1f1f1 1px solid; height :20px;
+}
+
+.lt1 {
+	BORDER-RIGHT: #999 1px solid; PADDING-RIGHT: 6px; BORDER-TOP: #999 1px solid; PADDING-LEFT: 6px; BACKGROUND: #ccc; PADDING-BOTTOM: 0px; BORDER-LEFT: #999 1px solid; CURSOR: hand; PADDING-TOP: 0px; BORDER-BOTTOM: #999 1px solid; height :20px;
+}
+
+ .hidden { display:none;} 
+ 
+ 
+.div5
+{
+    margin-top :5px;
+    margin-bottom :5px;
+}
+.textbox30
+{
+    height: 20px;
+    border-color: #000000;
+    border-style: none none inset none;
+    border-width: thin;
+    filter: alpha(opacity=80);
+    background-color: rgb(c, c,c);
+    background-color: rgba(c, c, c, 0);
+    padding: 5px 10px 5px 10px;
+}
+.td10
+{
+    padding: 10px 10px 10px 10px;
+}

@@ -1,0 +1,214 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+
+<link href="~/Content/layuiadmin/layui/css/layui.css" rel="stylesheet" media="all" />
+<script src="~/Content/layuiadmin/layui/layui.js" media="all"></script>
+<div class="layui-form layui-form-pane">
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">是否上传流水</label>
+        <div class="layui-form-block ">
+            <input type="radio" name="liushui" value="1" lay-filter="liushui" title="有流水" checked="">
+            <input type="radio" name="liushui" value="0" lay-filter="liushui" title="无流水">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">数据日期</label>
+        <div class="layui-input-inline">
+            <input type="text" id="datetime" name="datetime" lay-verify="required" style="margin-left:15px" class="layui-input" placeholder="YYYY-MM-DD" />
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<form class="layui-form layui-form-pane" id="isliushui">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend>当日有流水上传</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">导入流水文件</label>
+        <div class="layui-upload">
+            <button type="button" class="layui-btn" id="upload" name="upload" style="margin-left:15px">
+                <i class="layui-icon">&#xe67c;</i>上传文件
+            </button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">是否上传FTP</label>
+        <div class="layui-input-block">
+            <input name="upload" type="checkbox" value="1" title="是否上传" checked="" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">选择上传文件</label>
+        <div class="layui-input-block">
+            <input name="liushuidata" type="checkbox" value="1" title="上传流水" checked="" />
+            <input name="yuedata" type="checkbox" value="1" title="上传余额" checked="" />
+        </div>
+    </div>
+    <div class="layui-input-block">
+        <button id="upsubmit" class="layui-btn" lay-submit lay-filter="upsubmit">提交</button>
+    </div>
+
+</form>
+
+<form class="layui-form layui-form-pane" id="noliushui" style="display:none">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend>当日无流水上传</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">上期余额</label>
+        <div class="layui-input-inline">
+            <input type="text" name="yesterday" required lay-verify="required|number" placeholder="上期余额" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">本期余额</label>
+        <div class="layui-input-inline">
+            <input type="text" name="today" required lay-verify="required|number" placeholder="本期余额" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:130px">生成余额文件</label>
+        <div class="layui-input-block">
+            <input name="upload" type="checkbox" value="1" title="是否上传" checked="" />
+        </div>
+    </div>
+    <div class="layui-input-block">
+        <button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+    </div>
+
+</form>
+
+
+
+<script type="text/javascript">
+    // 上传等待
+    function showLoad() {
+        return layer.msg('拼命执行中...', { icon: 16, shade: [0.5, '#f5f5f5'], scrollbar: false, offset: 'auto', time: 100000 });
+    }
+    // 关闭
+    function closeLoad(index) {
+        layer.close(index);
+    }
+    layui.use(['laydate', 'element', 'form', 'jquery', 'upload'], function () {
+        var laydate = layui.laydate
+            , form = layui.form
+            , element = layui.element
+            , upload = layui.upload
+            , $ = layui.$;
+        //注意：parent 是 JS 自带的全局对象，可用于操作父页面
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        //从父层获取值，json是父层的全局js变量。eval是将该string类型的json串变为标准的json串
+        var parent_json = eval('(' + parent.json + ')');
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#datetime' //指定元素
+            , isInitValue: true
+        });
+        //各种基于事件的操作，下面会有进一步介绍
+        form.on('radio(liushui)', function (data) {
+            if (data.value == 1) {
+                $("#isliushui").show();
+                $("#noliushui").hide();
+            }
+            else {
+                $("#isliushui").hide();
+                $("#noliushui").show();
+            }
+        });
+        //选完文件后不自动上传
+        upload.render({
+            elem: '#upload'
+            , url: '/main/temp' //改成您自己的上传接口
+            , exts: 'xls|xlsx' //只允许上传压缩文件
+            , auto: false
+            , multiple: true
+            , bindAction: '#upsubmit'
+            , done: function (res) {
+            }
+        });
+        //监听提交
+        form.on('submit(upsubmit)', function (data) {
+            var formData = new FormData($("#isliushui")[0]);
+            formData.append("accountid", parent_json.ID);// "name": "value"
+            formData.append("AgencyNo", parent_json.AgencyNo);
+            formData.append("datetime", $("#datetime").val());
+            $.ajax({
+                url: '/Main/dataupload',
+                type: 'post',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "html",
+                beforeSend: function () {
+                    i = showLoad();
+                },
+                success: function (data) {
+                    var data = eval('(' + data + ')');//非常重要
+                    if (data.code == 0) {
+                        closeLoad(i);
+                        parent.layui.table.reload('test-table-toolbar');
+                        parent.layer.close(index);
+                        parent.layer.alert(data.msg);
+                    }
+                    else {
+                        closeLoad(i);
+                        parent.layer.alert(data.msg);
+                        console.log(data.msg);
+                    }
+                },
+                error: function (e) {
+                    closeLoad(i);
+                    layer.alert("提交失败！")
+                },
+            });
+            return false;
+        });
+
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            data.field["accountid"] = parent_json.ID;// "name": "value"
+            data.field["AgencyNo"] = parent_json.AgencyNo;
+            data.field["datetime"] = $("#datetime").val();
+            $.ajax({
+                url: '/main/dataupload1',
+                type: 'post',
+                data: data.field,
+                dataType: "html",
+                beforeSend: function () {
+                    i = showLoad();
+                },
+                success: function (data) {
+                    var data = eval('(' + data + ')');//非常重要
+                    if (data.code == 0) {
+                        closeLoad(i);
+                        parent.layui.table.reload('test-table-toolbar');
+                        parent.layer.close(index);
+                        parent.layer.alert(data.msg);
+                    }
+                    else {
+                        closeLoad(i);
+                        parent.layer.alert(data.msg);
+                        console.log(data.msg);
+                    }
+                },
+                error: function (e) {
+                    closeLoad(i);
+                    layer.alert("提交失败！")
+                },
+            });
+            return false;
+        });
+    });
+
+
+</script>

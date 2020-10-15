@@ -1,0 +1,143 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>FTPinfo</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/Content/layuiadmin/layui/css/layui.css" rel="stylesheet" media="all" />
+
+
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+    <table class="layui-hide" id="test" lay-filter="test" lay-data="{id: 'idTest'}"></table>
+    <script src="~/Content/layuiadmin/layui/layui.js" media="all"></script>
+
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+
+    </script>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="addData">添加FTP信息</button>
+        </div>
+    </script>
+    <script>
+        var json;
+        layui.use(['table', 'form', 'layer'], function () {
+            var table = layui.table
+                , form = layui.form
+                , $ = layui.$
+                , layer = layui.layer;
+
+            //第一个实例
+            table.render({
+
+
+                elem: '#test'
+                , url: '/Main/ftpPageList' //数据接口
+                , type: 'post'
+                , id: 'idTest'
+                , page: true //开启分页
+                , limit: 10
+                , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                , defaultToolbar: ['filter', 'exports', 'print']
+                , cols: [[ //表头
+                    { field: 'ID', title: 'ID', width: 60, sort: true, fixed: 'left', hide: true }
+                    , {
+                        field: 'id', title: '序号', width: 80, sort: true, unresize: true, fixed: 'left', templet: function (d) { return (d.LAY_INDEX); }
+                    }
+                    , { field: 'AgencyNo', title: '机构号', sort: true }
+                    , { field: 'FTPAddress', title: 'FTP地址', width: 140 }
+                    , { field: 'FTPUsername', title: '用户名' }
+                    , { field: 'FTPPassword', title: '密码' }
+                    , { field: 'data_Key', title: '密钥', width: 290 }
+                    , { fixed: 'right', align: 'center', toolbar: '#barDemo' }
+                ]]
+            });
+            //监听事件
+            table.on('toolbar(test)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                if (obj.event === 'addData') {
+                    layer.open({
+                        type: 2,
+                        area: ['490px', '490px'],
+                        fixed: false, //不固定
+                        maxmin: true,
+                        content: '/Main/addFTP'
+                    });
+                }
+
+            });
+            var checkStatus = table.checkStatus('idTest'); //idTest 即为基础参数 id 对应的值
+
+            //监听行工具事件
+            table.on('tool(test)', function (obj) {
+                var data = obj.data;
+                //console.log(obj)
+                if (obj.event === 'del') {
+                    layer.confirm('真的删除么', function (index) {
+                        obj.del();
+                        layer.close(index);
+                        $.ajax({
+                            url: '/Main/delFTP',
+                            type: 'post',
+                            data: data,
+                            dataType: "html",
+                            success: function (data) {
+                                var data = eval('(' + data + ')');//非常重要
+                                if (data.code == 0) {
+                                    table.reload('idTest');
+                                    layer.alert(data.msg);
+                                }
+                                else {
+
+                                    layer.alert(data.msg)
+
+                                }
+                            },
+                            error: function (e) {
+                                layer.alert("提交失败！")
+                            },
+
+                        });
+                    });
+                }
+                else if (obj.event === 'edit') {
+                    //iframe层-父子操作
+                    //这行是监听到的表格行数据信息，复制给json全局变量。
+                    json = JSON.stringify(data);
+                    layer.open({
+                        type: 2,
+                        area: ['460px', '490px'],
+                        fixed: false, //不固定
+                        maxmin: true,
+                        content: '/Main/editFTP'
+                    });
+                }
+                else if (obj.event === 'upload') {
+                    json = JSON.stringify(data);
+                    layer.open({
+                        type: 2,
+                        area: ['490px', '490px'],
+                        fixed: false,
+                        maxmin: true,
+                        content: '/Main/dataimport'
+                    });
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>
